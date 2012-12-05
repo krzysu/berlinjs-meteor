@@ -19,6 +19,10 @@
         
         {{loginButtons}}
         
+        {{#if currentUser}}
+          {{> allUsers}}
+        {{/if}}
+        
       </div>
     </div>
   </div>
@@ -26,4 +30,15 @@
 </body>
 
 
-
+<template name="allUsers">
+  <h3>All users:</h3>
+  <ul>
+  {{#each users}}
+    <li>
+      <img src="{{profile.picture}}" alt="picture">
+      <span>{{profile.name}}</span>
+    </li>    
+  {{/each}}
+  </ul>
+  
+</template>

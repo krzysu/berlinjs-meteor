@@ -1,13 +1,13 @@
 # Step by step guide to simple meteor.js app
 
-by: Kris Urbas, @krzysu  
+by: Kris Urbas, [@krzysu](https://twitter.com/krzysu)  
 
-We will build simple chat client for Facebook users.
+**We will build simple chat client for Facebook users.**
 
 
 ## Step 1. New project
 
-You need to have meteor installed. How to do that you will find on [meteor website](http://meteor.com/)
+You need to have meteor installed. Check [meteor website](http://meteor.com/) how to do that or just type in your terminal:
   
     $ curl https://install.meteor.com | sh
    
@@ -17,7 +17,7 @@ then create a new project and run it
     $ cd meteor-berlinjs
     $ meteor
     
-go to browser and open http://localhost:3000/.
+go to browser and open `http://localhost:3000/`.
 
 
 ## Step 2. Packages we need
@@ -26,7 +26,7 @@ You can also add packages from command line with
 
     $ meteor add <package_name>
       
-but I prefer to do it other way. Open the ./meteor-berlinjs/.meteor/packages file and add these lines:
+but I prefer to do it other way. Open the `meteor-berlinjs/.meteor/packages` file and add these lines:
 
     accounts-ui
     accounts-facebook
@@ -66,14 +66,14 @@ This step is quite easy with meteor two packages (we already added them in previ
     accounts-ui
     accounts-facebook
 
-Open layout.html and add somewhere
+Open `layout.html` and add somewhere
 
     {{loginButtons}}
     
 This will take care of displaying login with Facebook button and displaying user name if loged in.
 
 You need to create a new Facebook app, go here: [developers.facebook.com](https://developers.facebook.com).    
-Then open server.coffee and add
+Then open `server.coffee` and add
 
     # first, remove configuration entry in case service is already configured
     Accounts.loginServiceConfiguration.remove
@@ -91,3 +91,56 @@ You can always deploy your app to meteor servers with
     $ meteor deploy <your_app_name>
       
 this demo is available [here](http://berlinjs-demo.meteor.com/)
+
+
+## Step 5. Display all users
+
+We want to display user name and picture. To get user picture we need to hack a bit creating user accounts. Add this code to `server.cofee` file.
+
+    # during new account creation get user picture from facebook and save in user object
+    Accounts.onCreateUser (options, user) ->
+      if (options.profile)
+        options.profile.picture = getFbPicture( user.services.facebook.accessToken )
+
+        # We still want the default hook's 'profile' behavior.
+        user.profile = options.profile;
+      return user
+
+    # get user picture from facebook api
+    getFbPicture = (accessToken) ->
+      result = Meteor.http.get "https://graph.facebook.com/me",
+        params:
+          access_token: accessToken
+          fields: 'picture'
+
+      if(result.error)
+        throw result.error
+
+      return result.data.picture.data.url
+      
+Now we need to add some html to display users. Add this code to `layout.html` file.
+
+    {{#if currentUser}}
+      {{> allUsers}}
+    {{/if}}
+        
+    <template name="allUsers">
+      <h3>All users:</h3>
+      <ul>
+      {{#each users}}
+        <li>
+          <img src="{{profile.picture}}" alt="picture">
+          <span>{{profile.name}}</span>
+        </li>    
+      {{/each}}
+      </ul>
+      
+    </template>
+    
+And in the end we need to get users data and pass them to the template. Add this code to `main.coffee` file.
+
+    Template.allUsers.users = ->
+      Meteor.users.find({})
+
+That's all, try to login to your app from two different browsers with two different facebook accounts.
+
