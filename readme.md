@@ -57,4 +57,37 @@ open the project in your favourite code editor and let's organize our files a bi
       models.coffee
       
 we separate server side code from client side, and have shared file for models, that will be used on both client and server side.
- 
+
+
+## Step 4. Add login with Facebook
+
+This step is quite easy with meteor two packages (we already added them in previous step):
+
+    accounts-ui
+    accounts-facebook
+
+Open layout.html and add somewhere
+
+    {{loginButtons}}
+    
+This will take care of displaying login with Facebook button and displaying user name if loged in.
+
+You need to create a new Facebook app, go here: [developers.facebook.com](https://developers.facebook.com).    
+Then open server.coffee and add
+
+    # first, remove configuration entry in case service is already configured
+    Accounts.loginServiceConfiguration.remove
+      service: "facebook"
+
+    Accounts.loginServiceConfiguration.insert
+      service: "facebook"
+      appId: "<your_fb_app_id>"
+      secret: "<your_fb_app_secret>"
+      
+In this guide I only tell about important things, in the source code you will find a bit more, like styling, html structure etc.
+
+You can always deploy your app to meteor servers with
+
+    $ meteor deploy <your_app_name>
+      
+this demo is available [here](http://berlinjs-demo.meteor.com/)
