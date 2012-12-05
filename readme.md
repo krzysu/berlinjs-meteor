@@ -77,7 +77,7 @@ Open `layout.html` and add somewhere
     
 This will take care of displaying login with Facebook button and displaying user name if loged in.
 
-You need to create a new Facebook app. How to do that you will find [here](https://developers.facebook.com/apps).
+You need to create a new Facebook app. How to do that you will find [here](https://developers.facebook.com/docs/technical-guides/opengraph/opengraph-tutorial/#create-app).
 We need your facebook app id and secret key. Then open `server.coffee` and add:
 
     # first, remove configuration entry in case service is already configured
