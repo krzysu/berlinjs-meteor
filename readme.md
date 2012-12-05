@@ -2,12 +2,14 @@
 
 by: Kris Urbas, [@krzysu](https://twitter.com/krzysu)  
 
-**We will build simple chat client for Facebook users.**
+**We will build simple chat client for Facebook users.**  
+
+The demo is available [here](http://berlinjs-demo.meteor.com/)
 
 
 ## On a side note
 
-If you want to build something for real using meteor.js, preferable if you are a company or have funding.. you can always contact me here <span style="unicode-bidi:bidi-override;direction:rtl;">moc.liamg@lp.usyzrk</span>.
+If you want to build something for real using meteor.js, preferable if you are a company or have funding.. you can always contact me.
 
 ## Step 1. New project
 
@@ -15,13 +17,13 @@ You need to have meteor installed. Check [meteor website](http://meteor.com/) ho
   
     $ curl https://install.meteor.com | sh
    
-then create a new project and run it
+Then create a new project and run it
 
     $ meteor create meteor-berlinjs
     $ cd meteor-berlinjs
     $ meteor
     
-go to browser and open `http://localhost:3000/`.
+Go to browser and open `http://localhost:3000/`.
 
 
 ## Step 2. Packages we need
@@ -34,18 +36,17 @@ but I prefer to do it other way. Open the `meteor-berlinjs/.meteor/packages` fil
 
     accounts-ui
     accounts-facebook
-    jquery
     coffeescript
     stylus
     bootstrap
     
-You don't need to use jquery, coffeescript, stylus or bootstrap, they are here only for faster development, and if you are not familiar with them, and take your profession for serious, you should learn them.
+You don't need to use coffeescript or stylus to work with meteor, they are here only for faster development. But if you are not familiar with them, and take your profession for serious, you should learn them. Bootstrap is added only for fast styling, this app is is only a prototype, isn't it.
 
 As you can see in the browser, bootstrap styling is already applied, even without reloading the page.
 
 ## Step 3. File's structure
   
-open the project in your favourite code editor and let's organize our files a bit, we need structure like this:
+Open the project in your favourite code editor and let's organize our files a bit, we need structure like this:
 
     - meteor-berlinjs
       - client
@@ -60,7 +61,7 @@ open the project in your favourite code editor and let's organize our files a bi
           server.coffee
       models.coffee
       
-we separate server side code from client side, and have shared file for models, that will be used on both client and server side.
+We separate server side code from client side, and have shared file for models, which will be used on both client and server side.
 
 
 ## Step 4. Add login with Facebook
@@ -76,8 +77,8 @@ Open `layout.html` and add somewhere
     
 This will take care of displaying login with Facebook button and displaying user name if loged in.
 
-You need to create a new Facebook app, go here: [developers.facebook.com](https://developers.facebook.com).    
-Then open `server.coffee` and add
+You need to create a new Facebook app. How to do that you will find [here](https://developers.facebook.com/apps).
+We need your facebook app id and secret key. Then open `server.coffee` and add:
 
     # first, remove configuration entry in case service is already configured
     Accounts.loginServiceConfiguration.remove
@@ -93,8 +94,6 @@ In this guide I only tell about important things, in the source code you will fi
 You can always deploy your app to meteor servers with
 
     $ meteor deploy <your_app_name>
-      
-this demo is available [here](http://berlinjs-demo.meteor.com/)
 
 
 ## Step 5. Display all users
@@ -155,12 +154,13 @@ Chating is based on messages. So we need to add Messages model inside `model.cof
 
     Messages = new Meteor.Collection('messages')
 
+Yes, that is all we need to create a new collection of data in meteor.js!  
+
 Next we need to add some html for entering messages and displaying them. Add this code to `layout.html` file.
 
     {{#if currentUser}}
       {{> chatBox}}
     {{/if}}
-    
     
     <template name="chatBox">
       <h3>Let's chat:</h3>
@@ -217,4 +217,6 @@ And at the end we need to get all messages and display them. Add this code to `m
 And that's all. In source code you will find only a bit more styling. I hope all is clear but if you have questions you can always open an github issue for this project.
 
 * * *
-If you like it, consider [following me on twitter](https://twitter.com/krzysu) 
+If you like it, consider [following me on twitter](https://twitter.com/krzysu).  
+
+If you want to build something for real using meteor.js, preferable if you are a company or have funding.. you can always contact me.
