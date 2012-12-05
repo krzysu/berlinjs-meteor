@@ -1,3 +1,38 @@
+@import 'nib'
+
 .container-fluid
   max-width: 80%
   margin: 0 auto
+
+.users-list
+  padding: 0
+  margin: 0
+
+  li
+    list-style: none
+
+.messages-list
+  padding: 0
+  margin: 0
+
+  li
+    clearfix()
+    list-style: none
+    display: block
+    border-bottom: 1px solid #ccc
+    margin-bottom: 2px
+
+    img
+      float: left
+      margin: 0 5px 2px 0
+
+    .message-body
+      overflow: hidden
+
+  li:nth-child(2n)
+    img
+      float: right
+      margin: 0 0 2px 5px
+
+    .message-body
+      text-align: right

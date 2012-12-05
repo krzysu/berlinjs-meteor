@@ -14,16 +14,24 @@
       <div class="span12">
         <h1>BerlinJS Meteor.js Demo</h1>
         
-        <p>This application needs most basic Facebook permissions. I need only your name and picture. I won't publish anything on your wall.</p>
+        <p>This application needs most basic Facebook permissions. It only needs your name and picture. It won't publish anything on your wall.</p>
         <p>You can easily remove it from you Facebook applications right after the demo.</p>
         
         {{loginButtons}}
-        
-        {{#if currentUser}}
-          {{> allUsers}}
-        {{/if}}
-        
       </div>
+    </div>
+    
+    <div class="row-fluid">
+      
+      {{#if currentUser}}
+        <div class="span6">
+          {{> chatBox}}
+        </div>
+        <div class="span6" style="text-align: right;">
+          {{> allUsers}}
+        </div>
+      {{/if}}
+        
     </div>
   </div>
 
@@ -32,13 +40,32 @@
 
 <template name="allUsers">
   <h3>All users:</h3>
-  <ul>
+  <ul class="users-list">
   {{#each users}}
     <li>
-      <img src="{{profile.picture}}" alt="picture">
       <span>{{profile.name}}</span>
+      <img src="{{profile.picture}}" alt="picture">
     </li>    
   {{/each}}
   </ul>
+</template>
+
+
+<template name="chatBox">
+  <h3>Let's chat:</h3>
   
+  <form action="" id="add-message-form" class="form-inline">
+    <input type="text" id="message-input" placeholder="Your Message" style="width: 70%" />
+    <button class="btn btn-primary">Send</button>
+  </form>
+  
+  <h3>Messages:</h3>
+  <ul class="messages-list">
+    {{#each messages}}
+      <li>
+          <img src="{{author.profile.picture}}" alt="picture">
+          <div class="message-body">{{body}}</div>
+      </li>
+    {{/each}}
+  </ul>
 </template>

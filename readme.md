@@ -5,6 +5,10 @@ by: Kris Urbas, [@krzysu](https://twitter.com/krzysu)
 **We will build simple chat client for Facebook users.**
 
 
+## On a side note
+
+If you want to build something for real using meteor.js, preferable if you are a company or have funding.. you can always contact me here <span style="unicode-bidi:bidi-override;direction:rtl;">moc.liamg@lp.usyzrk</span>.
+
 ## Step 1. New project
 
 You need to have meteor installed. Check [meteor website](http://meteor.com/) how to do that or just type in your terminal:
@@ -145,7 +149,72 @@ And in the end we need to get users data and pass them to the template. Add this
 That's all, try to login to your app from two different browsers with two different facebook accounts.
 
 
-## Next steps will be added soon
+## Step 6. Add simple chat system
 
+Chating is based on messages. So we need to add Messages model inside `model.coffee` file.
 
+    Messages = new Meteor.Collection('messages')
 
+Next we need to add some html for entering messages and displaying them. Add this code to `layout.html` file.
+
+    {{#if currentUser}}
+      {{> chatBox}}
+    {{/if}}
+    
+    
+    <template name="chatBox">
+      <h3>Let's chat:</h3>
+      
+      <form id="add-message-form">
+        <input type="text" id="message-input" placeholder="Your Message" />
+        <button>Send</button>
+      </form>
+      
+      <h3>Messages:</h3>
+      <ul>
+        {{#each messages}}
+          <li>
+              <img src="{{author.profile.picture}}" alt="picture">
+              <span>{{body}}</span>
+          </li>
+        {{/each}}
+      </ul>
+    </template>
+
+Great. The only missing part is logic to save messages sent by form and get them to display on messages list. Let's add function to save messages together with the author of the message. Add this code to `main.coffee` file.
+
+    # add new message
+    newMessage = () ->
+      input = document.getElementById('message-input')
+
+      if input.value != ''
+
+        Messages.insert
+          author: Meteor.user()
+          body: input.value
+          time: Date.now()
+
+      input.value = ''
+      
+Now we need to call `newMessage` on user action. Let's add template events in `main.coffee` file.
+
+    # add message events
+      Template.chatBox.events =
+        'keydown #add-message-form input': (e) ->
+          if e.which == 13
+            newMessage()
+
+        'click #add-message-form button': (e) ->
+          e.preventDefault()
+          newMessage()
+
+And at the end we need to get all messages and display them. Add this code to `main.coffee` file.
+
+      # get all messages
+      Template.chatBox.messages = ->
+        Messages.find( {}, { sort: { time: -1 }} )
+
+And that's all. In source code you will find only a bit more styling. I hope all is clear but if you have questions you can always open an github issue for this project.
+
+* * *
+If you like it, consider [following me on twitter](https://twitter.com/krzysu) 
