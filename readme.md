@@ -144,3 +144,8 @@ And in the end we need to get users data and pass them to the template. Add this
 
 That's all, try to login to your app from two different browsers with two different facebook accounts.
 
+
+## Next steps will be added soon
+
+
+
