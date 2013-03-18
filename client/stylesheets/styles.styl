@@ -1,15 +1,42 @@
 @import 'nib'
 
 .container-fluid
-  max-width: 80%
+  max-width: 800px
   margin: 0 auto
 
-.users-list
-  padding: 0
-  margin: 0
+  & > hr
+    margin: 2em 0
 
-  li
-    list-style: none
+#login-buttons
+  padding-top: 0.5em
+
+.login-display-name
+  font-size: 0.9em
+  font-weight: bold
+
+.all-users-box
+  padding: 0 8px 8px
+
+  img
+    display: inline-block
+
+.chat-box
+  background: #f3f0e7
+
+  h4, form
+    padding: 8px
+    margin: 0
+
+  form
+    padding-top: 0
+    border-bottom: 1px solid #e4e2df
+
+  #message-input
+    margin-bottom: 8px
+
+  button
+    box-sizing: border-box
+    width: 100%
 
 .messages-list
   padding: 0
@@ -19,20 +46,34 @@
     clearfix()
     list-style: none
     display: block
-    border-bottom: 1px solid #ccc
-    margin-bottom: 2px
+    border-bottom: 1px solid #e4e2df
+    border-top: 1px solid #fff
+    padding: 8px
+    font-size: 0.9em
+    line-height: 1.4em
 
     img
       float: left
-      margin: 0 5px 2px 0
+      margin: 0 8px 0 0
 
     .message-body
       overflow: hidden
 
+    .message-author
+      font-weight: bold
+
   li:nth-child(2n)
+    text-align: right
+
     img
       float: right
-      margin: 0 0 2px 5px
+      margin: 0 0 0 8px
+  
 
-    .message-body
-      text-align: right
+
+
+
+
+
+
+
